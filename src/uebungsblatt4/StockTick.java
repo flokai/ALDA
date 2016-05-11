@@ -17,8 +17,5 @@ public class StockTick {
 	public void setKurs(int kurs) {
 		this.kurs = kurs;
 	}
-	
-	
 
-	
 }
