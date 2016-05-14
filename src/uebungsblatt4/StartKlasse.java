@@ -1,29 +1,44 @@
 package uebungsblatt4;
 
+import java.util.Random;
 import java.util.Scanner;
 
 public class StartKlasse {
 
-	public static void main(String[] args) {
-
-		// Anlegen des Arrays mittels Benutzereingabe der Länge
+	public static void main(String[] args) {		
+		
+		// Durch Abfrage die Array-Länge bestimmen
 		Scanner input = new Scanner(System.in);
 		System.out.println("Bitte geben Sie die Array-Länge ein");
 		int laenge = input.nextInt();
-		StockTick[] Aktienkurse = new StockTick[laenge];
-		if (laenge >= 0) {
-			System.out.println("Array mit der Länge " + laenge
-					+ " wurde erzeugt.");
+		
+		// Array erzeugen
+		StockTickArray AktienArray = new StockTickArray(laenge);
+		
+		// Array mit den möglichen Firmen-Kürzel
+		String[] Firmen = {"IBM", "CSCO", "HPQ", "GOOG", "ORCL", "GPRO", "BABA", "AAPL", "SAP", "MSFT"};
+		
+		for (int i = 0; i < AktienArray.Aktienkurse.length; i++) {
+			Random zufall = new Random();
+			int kursWerte = zufall.nextInt(11)+60; // bis 11, da zahlen von 0 bis 10
+			int zähler = zufall.nextInt(10); // bis 9, da Array mit 0 beginnt
+			AktienArray.Aktienkurse[i].setKurs(kursWerte);
+			AktienArray.Aktienkurse[i].setSymbol(Firmen[zähler]);
 		}
 		
-		Aktienkurse[0].setKurs(4);
-		System.out.println(Aktienkurse[0].getKurs());
+		AktienArray.getAktienkurse();
 		
-
-//		StockTickArray Test = new StockTickArray (laenge);
-//		System.out.println(Test.laenge);
-//		Test.getKurs();
+//		AktienArray.sortStockTickArray();
+//		System.out.println("----- Algorithmus sortiert ------");
+		
+//		AktienArray.sortStockTickArray2();
+//		System.out.println("----- Algorithmus sortiert ------");
+		
+		AktienArray.sortStockTickArray3();
+		System.out.println("----- Algorithmus sortiert ------");
+		
+		AktienArray.getAktienkurse();
 		
 	}
-
+	
 }
