@@ -23,4 +23,11 @@ public class StockTick {
 		this.kurs = kurs;
 	}
 
+	@Override
+	public String toString() {
+		return symbol + " " + kurs;
+	}
+	
+	
+
 }

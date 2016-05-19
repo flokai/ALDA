@@ -1,5 +1,7 @@
 package uebungsblatt4;
 
+import java.util.Arrays;
+
 public class StockTickArray {
 
 	int laenge;
@@ -36,7 +38,7 @@ public class StockTickArray {
 	
 	// Sortieren durch Einfügen mit sequentieller Suche
 	// nach Kurswerten
-	public void sortStockTickArray() {
+	public int sortStockTickArray() {
 		int j;
 		int zähler = 0;
 		StockTick Aktie = new StockTick(0,"");
@@ -61,12 +63,12 @@ public class StockTickArray {
 		for (int i = 0; i < Aktienkurse2.length; i++) {
 			Aktienkurse[i] = Aktienkurse2[i];
 		}
-		System.out.println("Die Anzahl der Vergleiche beträgt: " + zähler);
+		return zähler;
 	}
 
 	// Sortieren durch Einfügen mit sequentieller Suche
 	// nach FirmenKürzel
-	public void sortStockTickArray2() {
+	public int sortStockTickArray2() {
 		int j;
 		int zähler = 0;
 		StockTick Aktie = new StockTick(0,"");
@@ -90,13 +92,15 @@ public class StockTickArray {
 		for (int i = 0; i < Aktienkurse2.length; i++) {
 			Aktienkurse[i] = Aktienkurse2[i];
 		}
+		return zähler;
 	}
 	
 	// Sortieren durch Einfügen mit binärer Suche.
-	public void sortStockTickArray3() {
+	public int sortStockTickArray3() {
 		
 		int j, links, rechts, mitte;
 		StockTick Aktie = new StockTick(0,"");
+		int zähler = 0;
 		
 		// zweites Array mit gleicher Länge und Werten wird angelegt
 		StockTick[] Aktienkurse2 = new StockTick[this.laenge];
@@ -114,6 +118,7 @@ public class StockTickArray {
 					rechts = (mitte - 1);// -1	0
 				} else
 					links = (mitte + 1);// 0	1
+				zähler++;
 			}
 			for (j = i-1; j >= links; j--) {
 				Aktienkurse2[(j+1)] = Aktienkurse2[j]; 
@@ -123,6 +128,7 @@ public class StockTickArray {
 		for (int i = 0; i < Aktienkurse2.length; i++) {
 			Aktienkurse[i] = Aktienkurse2[i];
 		}
+		return zähler;
 	}
 	
 	
@@ -130,5 +136,16 @@ public class StockTickArray {
 		
 
 	}
-
+	
+	
+	public boolean ArraySortiert (){
+		boolean test = false;
+		for (int i = 0; i < Aktienkurse.length-1; i++) {
+			if(Aktienkurse[i].getKurs()<=Aktienkurse[i+1].getKurs()){
+				test = true;
+			}
+		}
+		return test;
+	}
+	
 }
