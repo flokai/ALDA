@@ -52,17 +52,17 @@ public class StockTickArray {
 		for (int i = 1; i < Aktienkurse.length; i++) {
 			Aktie = Aktienkurse[i];
 			j = i;
-			while(j > 0 && Aktie.getKurs() < Aktienkurse2[j-1].getKurs()){
-				Aktienkurse2[j] = Aktienkurse2[j-1];
+			while(j > 0 && Aktie.getKurs() < Aktienkurse[j-1].getKurs()){
+				Aktienkurse[j] = Aktienkurse[j-1];
 				j--;
 				zähler++; // Zur Zählung der Anzahl der Vergleiche
 			}
-			Aktienkurse2[j] = Aktie;
+			Aktienkurse[j] = Aktie;
 		}
 		
-		for (int i = 0; i < Aktienkurse2.length; i++) {
-			Aktienkurse[i] = Aktienkurse2[i];
-		}
+//		for (int i = 0; i < Aktienkurse2.length; i++) {
+//			Aktienkurse[i] = Aktienkurse2[i];
+//		}
 		return zähler;
 	}
 
@@ -82,16 +82,16 @@ public class StockTickArray {
 		for (int i = 1; i < Aktienkurse.length; i++) {
 			Aktie = Aktienkurse[i];
 			j = i;
-			while(j > 0 && (Aktie.getSymbol().compareTo(Aktienkurse2[j-1].getSymbol()) < 0)){
-				Aktienkurse2[j] = Aktienkurse2[j-1];
+			while(j > 0 && (Aktie.getSymbol().compareTo(Aktienkurse[j-1].getSymbol()) < 0)){
+				Aktienkurse[j] = Aktienkurse[j-1];
 				j--;
 				zähler++;
 			}
-			Aktienkurse2[j] = Aktie;
+			Aktienkurse[j] = Aktie;
 		}
-		for (int i = 0; i < Aktienkurse2.length; i++) {
-			Aktienkurse[i] = Aktienkurse2[i];
-		}
+//		for (int i = 0; i < Aktienkurse.length; i++) {
+//			Aktienkurse[i] = Aktienkurse[i];
+//		}
 		return zähler;
 	}
 	
@@ -101,32 +101,25 @@ public class StockTickArray {
 		int j, links, rechts, mitte;
 		StockTick Aktie = new StockTick(0,"");
 		int zähler = 0;
-		
-		// zweites Array mit gleicher Länge und Werten wird angelegt
-		StockTick[] Aktienkurse2 = new StockTick[this.laenge];
-		for (int i = 0; i < Aktienkurse2.length; i++) {
-			Aktienkurse2[i] = new StockTick(Aktienkurse[i].getKurs(),Aktienkurse[i].getSymbol());
-		}
+
 		// eigentlicher Algorithmus
-		for (int i = 1; i < Aktienkurse2.length; i++) {
+		for (int i = 1; i < Aktienkurse.length; i++) {
 			Aktie = Aktienkurse[i];
 			links = 0;
 			rechts = i-1;
 			while (links <= rechts){
 				mitte = ((links+rechts)/2);
-				if(Aktie.getKurs() < Aktienkurse2[mitte].getKurs()){
+				if(Aktie.getKurs() < Aktienkurse[mitte].getKurs()){
 					rechts = (mitte - 1);// -1	0
+					zähler++;
 				} else
 					links = (mitte + 1);// 0	1
-				zähler++;
+					zähler++;
 			}
 			for (j = i-1; j >= links; j--) {
-				Aktienkurse2[(j+1)] = Aktienkurse2[j]; 
-				Aktienkurse2[links] = Aktie;
+				Aktienkurse[(j+1)] = Aktienkurse[j]; 
+				Aktienkurse[links] = Aktie;
 			}
-		}
-		for (int i = 0; i < Aktienkurse2.length; i++) {
-			Aktienkurse[i] = Aktienkurse2[i];
 		}
 		return zähler;
 	}
