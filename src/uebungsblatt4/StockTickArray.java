@@ -42,12 +42,6 @@ public class StockTickArray {
 		int j;
 		int zähler = 0;
 		StockTick Aktie = new StockTick(0,"");
-		// zweites Array mit gleicher Länger anlegen
-		StockTick[] Aktienkurse2 = new StockTick[this.laenge];
-		for (int i = 0; i < Aktienkurse2.length; i++) {
-			Aktienkurse2[i] = new StockTick(Aktienkurse[i].getKurs(),Aktienkurse[i].getSymbol());
-		}
-		// der Algorithmus
 		// sortiert wird nach dem Aktienkurs
 		for (int i = 1; i < Aktienkurse.length; i++) {
 			Aktie = Aktienkurse[i];
@@ -59,10 +53,6 @@ public class StockTickArray {
 			}
 			Aktienkurse[j] = Aktie;
 		}
-		
-//		for (int i = 0; i < Aktienkurse2.length; i++) {
-//			Aktienkurse[i] = Aktienkurse2[i];
-//		}
 		return zähler;
 	}
 
@@ -72,12 +62,6 @@ public class StockTickArray {
 		int j;
 		int zähler = 0;
 		StockTick Aktie = new StockTick(0,"");
-		// zweites Array mit gleicher Länge anlegen
-		StockTick[] Aktienkurse2 = new StockTick[this.laenge];
-		for (int i = 0; i < Aktienkurse2.length; i++) {
-			Aktienkurse2[i] = new StockTick(Aktienkurse[i].getKurs(), Aktienkurse[i].getSymbol());
-		}
-		// der Algorithmus
 		// sortiert wird nach dem Aktienkurs
 		for (int i = 1; i < Aktienkurse.length; i++) {
 			Aktie = Aktienkurse[i];
@@ -89,9 +73,6 @@ public class StockTickArray {
 			}
 			Aktienkurse[j] = Aktie;
 		}
-//		for (int i = 0; i < Aktienkurse.length; i++) {
-//			Aktienkurse[i] = Aktienkurse[i];
-//		}
 		return zähler;
 	}
 	
@@ -118,27 +99,106 @@ public class StockTickArray {
 			}
 			for (j = i-1; j >= links; j--) {
 				Aktienkurse[(j+1)] = Aktienkurse[j]; 
-				Aktienkurse[links] = Aktie;
 			}
+			Aktienkurse[links] = Aktie;
 		}
 		return zähler;
 	}
 	
 	
-	public void sortStockTickArray4() {
+	// Sortieren durch Einfügen mit binärer Suche.
+	// nach Firmensymbol
+	public int sortStockTickArray4() {
 		
+		int j, links, rechts, mitte;
+		StockTick Aktie = new StockTick(0,"");
+		int zähler = 0;
 
+		// eigentlicher Algorithmus
+		for (int i = 1; i < Aktienkurse.length; i++) {
+			Aktie = Aktienkurse[i];
+			links = 0;
+			rechts = i-1;
+			while (links <= rechts){
+				mitte = ((links+rechts)/2);
+				if(Aktie.getSymbol().compareTo(Aktienkurse[mitte].getSymbol()) < 0){
+					rechts = (mitte - 1);// -1	0
+					zähler++;
+				} else
+					links = (mitte + 1);// 0	1
+					zähler++;
+			}
+			for (j = i-1; j >= links; j--) {
+				Aktienkurse[(j+1)] = Aktienkurse[j]; 
+			}
+			Aktienkurse[links] = Aktie;
+		}
+		return zähler;
+	}	
+	
+	// Sortieren durch Einfügen mit binärer Suche mit beliebigen Grenzen.
+	public int sortStockTickArray5(int left, int right) {
+		
+		int j, links, rechts, mitte;
+		StockTick Aktie = new StockTick(0,"");
+		int zähler = 0;
+
+		// eigentlicher Algorithmus
+		for (int i = 1; i < Aktienkurse.length; i++) {
+			Aktie = Aktienkurse[i];
+			links = left;
+			rechts = right;
+			while (links <= rechts){
+				mitte = ((links+rechts)/2);
+				if(Aktie.getKurs() < Aktienkurse[mitte].getKurs()){
+					rechts = (mitte - 1);// -1	0
+					zähler++;
+				} else
+					links = (mitte + 1);// 0	1
+					zähler++;
+			}
+			for (j = i-1; j >= links; j--) {
+				Aktienkurse[(j+1)] = Aktienkurse[j]; 
+			}
+			Aktienkurse[links] = Aktie;
+		}
+		return zähler;
 	}
 	
-	
-	public boolean ArraySortiert (){
+	// binäre suche
+	public boolean binäreSuche(String AktienSymbol) {
+		
+		int j, links, rechts, mitte;
 		boolean test = false;
-		for (int i = 0; i < Aktienkurse.length-1; i++) {
-			if(Aktienkurse[i].getKurs()<=Aktienkurse[i+1].getKurs()){
-				test = true;
+		
+		// eigentlicher Algorithmus
+		for (int i = 1; i < Aktienkurse.length+1; i++) {
+			links = 0;
+			rechts = i-1;
+			while (links <= rechts){
+				mitte = ((links+rechts)/2);
+				if(AktienSymbol.compareTo(Aktienkurse[mitte].getSymbol()) < 0){
+					rechts = (mitte - 1);// -1	0
+				} 
+				if(AktienSymbol.compareTo(Aktienkurse[mitte].getSymbol()) > 0){
+					links = (mitte + 1);// -1	0
+				}
+				if(AktienSymbol.compareTo(Aktienkurse[mitte].getSymbol()) == 0){
+					return true;
+				}
 			}
 		}
-		return test;
+		return false;
+	}
+	
+	// prüft ob das Array sortiert ist
+	public boolean ArraySortiert (){
+		for (int i = 0; i < Aktienkurse.length-1; i++) {
+			if(Aktienkurse[i].getSymbol().compareTo(Aktienkurse[i+1].getSymbol()) > 0){
+				return false;
+			}
+		}
+		return true;
 	}
 	
 }
