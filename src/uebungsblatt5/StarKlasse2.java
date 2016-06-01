@@ -28,13 +28,46 @@ public class StarKlasse2 {
 			AktienArray.Aktienkurse[i].setSymbol(Firmen[zähler]);
 		}
 
+//		AktienArray.getAktienkurse();
+//		AktienArray.quickSortKurse(0, (AktienArray.Aktienkurse.length-1));
+//		System.out.println("-------- Aktienkurse sortiert --------");
+//		AktienArray.getAktienkurse();
+//		AktienArray.quickSortSymbol(0, (AktienArray.Aktienkurse.length-1));
+//		System.out.println("-------- Aktienkurse sortiert --------");
+//		AktienArray.getAktienkurse();
+//		
+//		int a = 0, b = 0;
+//		for (int k = 1; k < 6; k++) {
+//
+//			for (int i = 0; i < AktienArray.Aktienkurse.length; i++) {
+//				Random zufall = new Random();
+//				int kursWerte = zufall.nextInt(11) + 60;
+//				// bis 11, da zahlen von 0 bis 10
+//				int zähler = zufall.nextInt(10);
+//				// bis 9, da Array mit 0 beginnt
+//				AktienArray.Aktienkurse[i].setKurs(kursWerte);
+//				AktienArray.Aktienkurse[i].setSymbol(Firmen[zähler]);
+//			}
+//			StockTickArray AktienArray2 = new StockTickArray(laenge);
+//			
+//			// zweites gleiches Array anelgen
+//			for (int i = 0; i < AktienArray.Aktienkurse.length; i++) {
+//				AktienArray2.Aktienkurse[i].setKurs(AktienArray.Aktienkurse[i].getKurs());
+//				AktienArray2.Aktienkurse[i].setSymbol(AktienArray.Aktienkurse[i].getSymbol());
+//			}
+//
+//			System.out.println("Pivot mit Mittelwert: "+ AktienArray.quickSortKurse(0, AktienArray.laenge-1));
+//			System.out.println("Pivot mit Zufallswert "+ AktienArray2.quickSortRandom(0, AktienArray2.laenge-1));
+//			System.out.println();
+//		}
+
 		AktienArray.getAktienkurse();
-		AktienArray.quickSortKurse(0, (AktienArray.Aktienkurse.length-1));
+		System.out.println(AktienArray.quickSortKurseMitBinaer(0, AktienArray.laenge-1));
 		System.out.println("-------- Aktienkurse sortiert --------");
 		AktienArray.getAktienkurse();
-		AktienArray.quickSortSymbol(0, (AktienArray.Aktienkurse.length-1));
-		System.out.println("-------- Aktienkurse sortiert --------");
-		AktienArray.getAktienkurse();
+		
+		
+		
 		
 	}
 
