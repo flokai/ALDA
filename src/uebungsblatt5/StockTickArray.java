@@ -6,6 +6,8 @@ public class StockTickArray {
 
 	int laenge;
 	public StockTick[] Aktienkurse;
+	int ausgabeKurs;
+	int zähler;
 
 	// Konstruktor
 	public StockTickArray(int laenge) {
@@ -16,6 +18,18 @@ public class StockTickArray {
 		for (int i = 0; i < Aktienkurse.length; i++) {
 			Aktienkurse[i] = new StockTick(0, "");
 		}
+	}
+	
+	
+
+	public int getAusgabeKurs() {
+		return ausgabeKurs;
+	}
+
+
+
+	public void setAusgabeKurs(int ausgabeKurs) {
+		this.ausgabeKurs = ausgabeKurs;
 	}
 
 	public void getKurs() {
@@ -210,10 +224,8 @@ public class StockTickArray {
 		Aktienkurse[j] = temp;
 	}
 
-	public int quickSortKurse(int left, int right) {
-		int zähler = 1;
+	public void quickSortKurse(int left, int right) {
 		StockTick pivot = Aktienkurse[(left + right) / 2];
-		zähler++;
 		int i = left;
 		int j = right;
 
@@ -226,7 +238,7 @@ public class StockTickArray {
 			}
 			if (i <= j) {
 				swap(i, j);
-				zähler = (zähler + 3);
+				ausgabeKurs = (ausgabeKurs + 3);
 				i++;
 				j--;
 			}
@@ -237,7 +249,6 @@ public class StockTickArray {
 		if (i < right) {
 			quickSortKurse(i, right);
 		}
-		return zähler;
 	}
 
 	public void quickSortSymbol(int left, int right) {
@@ -266,10 +277,9 @@ public class StockTickArray {
 		}
 	}
 
-	public int quickSortRandom(int left, int right) {
-		int zähler = 1;
-		StockTick pivot = Aktienkurse[(int) Math.random() * Aktienkurse.length];
-		zähler++;
+	public void quickSortRandom(int left, int right) {
+		int diff = right-left;
+		StockTick pivot = Aktienkurse[(int) Math.random() * diff];
 		int i = left;
 		int j = right;
 
@@ -282,7 +292,7 @@ public class StockTickArray {
 			}
 			if (i <= j) {
 				swap(i, j);
-				zähler = (zähler + 3);
+				ausgabeKurs = (ausgabeKurs + 3);
 				i++;
 				j--;
 			}
@@ -293,21 +303,22 @@ public class StockTickArray {
 		if (i < right) {
 			quickSortKurse(i, right);
 		}
-		return zähler;
 	}
 
 	// Sortieren durch Einfügen mit binärer Suche.
-	public int insertionSort(int left, int right) {
+	public void insertionSort(int left, int right) {
 
 		int j, links, rechts, mitte;
 		StockTick Aktie = new StockTick(0, "");
-		int zähler = 0;
+		links = left;
+		rechts = right;
 
 		// eigentlicher Algorithmus
-		for (int i = 1; i < Aktienkurse.length; i++) {
+		for (int i = links; i < rechts; i++) {
 			Aktie = Aktienkurse[i];
+			ausgabeKurs++;
 			links = left;
-			rechts = right;
+			rechts = i-1;
 			while (links <= rechts) {
 				mitte = ((links + rechts) / 2);
 				if (Aktie.getKurs() < Aktienkurse[mitte].getKurs()) {
@@ -319,15 +330,15 @@ public class StockTickArray {
 			}
 			for (j = i - 1; j >= links; j--) {
 				Aktienkurse[(j + 1)] = Aktienkurse[j];
+				ausgabeKurs++;
 			}
 			Aktienkurse[links] = Aktie;
+			ausgabeKurs++;
 		}
-		return zähler;
+		System.out.println("hallo");
 	}
 
 	public int quickSortKurseMitBinaer(int left, int right) {
-		int zähler = 1;
-
 		StockTick pivot = Aktienkurse[(left + right) / 2];
 		zähler++;
 		int i = left;
@@ -342,22 +353,25 @@ public class StockTickArray {
 			}
 			if (i <= j) {
 				swap(i, j);
-				zähler = (zähler + 3);
+				ausgabeKurs = (ausgabeKurs + 3);
 				i++;
 				j--;
 			}
 		}
 
-		if ((j - i) > 5) {
-			if (left < j) {
-				quickSortKurse(left, j);
+		if (left < j) {
+			if ((j - left) > 5) {
+				quickSortKurseMitBinaer(left, j);
+			} else {
+				insertionSort(left, j);
 			}
-			if (i < right) {
-				quickSortKurse(i, right);
+		}
+		if (i < right) {
+			if ((right - i) > 5) {
+				quickSortKurseMitBinaer(i, right);
+			} else {
+				insertionSort(i, right);
 			}
-		} else {
-			this.insertionSort(left, right);
-			zähler = zähler + 100;
 		}
 
 		return zähler;
